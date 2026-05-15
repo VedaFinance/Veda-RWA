@@ -1,0 +1,60 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  contracts:
+    name: Contracts (Rust/Soroban)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: packages/contracts
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: packages/contracts
+      - name: Build
+        run: cargo build --release --target wasm32-unknown-unknown
+      - name: Test
+        run: cargo test
+
+  backend:
+    name: Backend (Fastify/TypeScript)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: packages/backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm install
+      - run: npm run build
+
+  app:
+    name: App (Next.js)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: packages/app
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm install
+      - run: npm run build
+        env:
+          NEXT_PUBLIC_API_URL: http://localhost:3001
+          NEXT_PUBLIC_STELLAR_NETWORK: testnet

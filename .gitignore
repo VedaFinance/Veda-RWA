@@ -2,3 +2,5 @@ target/
 .soroban/
 *.wasm
 Cargo.lock
+node_modules/
+

@@ -1,0 +1,17 @@
+{
+  "name": "veda",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "packages/backend",
+    "packages/app"
+  ],
+  "scripts": {
+    "dev:backend": "npm run dev --workspace=packages/backend",
+    "dev:app": "npm run dev --workspace=packages/app",
+    "build:backend": "npm run build --workspace=packages/backend",
+    "build:app": "npm run build --workspace=packages/app",
+    "build:contracts": "cd packages/contracts && make wasm",
+    "test:contracts": "cd packages/contracts && make test"
+  }
+}

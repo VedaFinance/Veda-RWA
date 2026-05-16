@@ -56,7 +56,7 @@ jobs:
       - run: npm install --ignore-scripts
       - name: Shim react-dom/test-utils for React 19
         run: |
-          FILE="$(npm root)/react-dom/test-utils.js"
+          FILE="../../node_modules/react-dom/test-utils.js"
           [ -f "$FILE" ] || echo "module.exports = require('react-dom');" > "$FILE"
       - run: npm test
       - run: npm run build

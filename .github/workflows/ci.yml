@@ -57,7 +57,9 @@ jobs:
       - name: Shim react-dom/test-utils for React 19
         run: |
           FILE="../../node_modules/react-dom/test-utils.js"
-          [ -f "$FILE" ] || echo "module.exports = require('react-dom');" > "$FILE"
+          if [ ! -f "$FILE" ]; then
+            echo "module.exports = require('react-dom');" > "$FILE"
+          fi
       - run: npm test
       - run: npm run build
         env:

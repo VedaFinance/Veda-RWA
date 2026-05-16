@@ -4,9 +4,14 @@ import { useFreighter } from '@/hooks/useFreighter'
 import { api, type Asset, type Investor } from '@/lib/api'
 
 export default function DashboardPage() {
+  const [mounted, setMounted] = useState(false)
   const { address, error: walletError, connect, disconnect } = useFreighter()
   const [assets, setAssets] = useState<Asset[]>([])
   const [investor, setInvestor] = useState<Investor | null>(null)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   useEffect(() => {
     api.assets.list().then(setAssets).catch(console.error)
@@ -22,7 +27,7 @@ export default function DashboardPage() {
       {/* Header */}
       <div className="flex items-center justify-between mb-10">
         <h1 className="text-2xl font-bold tracking-tight">Veda RWA Platform</h1>
-        {address ? (
+        {mounted && address ? (
           <div className="flex items-center gap-3">
             <span className="text-sm text-gray-400 font-mono">
               {address.slice(0, 6)}…{address.slice(-4)}
@@ -34,14 +39,14 @@ export default function DashboardPage() {
               Disconnect
             </button>
           </div>
-        ) : (
+        ) : mounted ? (
           <button
             onClick={connect}
             className="px-4 py-2 rounded bg-brand text-white font-medium hover:bg-brand-dark"
           >
             Connect Freighter
           </button>
-        )}
+        ) : null}
       </div>
 
       {walletError && (

@@ -3,4 +3,3 @@ target/
 *.wasm
 Cargo.lock
 node_modules/
-

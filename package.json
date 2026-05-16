@@ -7,12 +7,16 @@
     "packages/app"
   ],
   "scripts": {
+    "prepare": "husky",
     "dev:backend": "npm run dev --workspace=packages/backend",
     "dev:app": "npm run dev --workspace=packages/app",
     "build:backend": "npm run build --workspace=packages/backend",
     "build:app": "npm run build --workspace=packages/app",
     "build:contracts": "cd packages/contracts && make wasm",
-    "test:contracts": "cd packages/contracts && make test",
-    "validate:env": "node scripts/validate-env.mjs"
+    "test:contracts": "cd packages/contracts && make test"
+  },
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "lint-staged": "^17.0.4"
   }
 }

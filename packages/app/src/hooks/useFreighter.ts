@@ -2,7 +2,7 @@
 import { useState, useCallback } from 'react'
 import {
   isConnected,
-  getAddress,
+  getPublicKey,
   signTransaction,
 } from '@stellar/freighter-api'
 
@@ -18,9 +18,8 @@ export function useFreighter() {
         setError('Freighter not installed')
         return
       }
-      const result = await getAddress()
-      if (result.error) { setError(result.error); return }
-      setAddress(result.address)
+      const pubKey = await getPublicKey()
+      setAddress(pubKey)
     } catch (e) {
       setError(String(e))
     }

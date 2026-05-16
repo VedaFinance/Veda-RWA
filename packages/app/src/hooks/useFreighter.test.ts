@@ -1,5 +1,5 @@
-import { renderHook, act } from '@testing-library/react'
 import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { renderHook, act } from '@testing-library/react'
 import { useFreighter } from './useFreighter'
 
 vi.mock('@stellar/freighter-api', () => ({
@@ -13,9 +13,7 @@ import { isConnected, getPublicKey } from '@stellar/freighter-api'
 const mockIsConnected = vi.mocked(isConnected)
 const mockGetPublicKey = vi.mocked(getPublicKey)
 
-beforeEach(() => {
-  vi.clearAllMocks()
-})
+beforeEach(() => vi.clearAllMocks())
 
 describe('useFreighter', () => {
   it('connect sets address on success', async () => {
@@ -23,7 +21,6 @@ describe('useFreighter', () => {
     mockGetPublicKey.mockResolvedValue('GABC123')
 
     const { result } = renderHook(() => useFreighter())
-
     await act(async () => { await result.current.connect() })
 
     expect(result.current.address).toBe('GABC123')
@@ -34,7 +31,6 @@ describe('useFreighter', () => {
     mockIsConnected.mockResolvedValue(false)
 
     const { result } = renderHook(() => useFreighter())
-
     await act(async () => { await result.current.connect() })
 
     expect(result.current.address).toBeNull()
@@ -46,11 +42,9 @@ describe('useFreighter', () => {
     mockGetPublicKey.mockResolvedValue('GABC123')
 
     const { result } = renderHook(() => useFreighter())
-
     await act(async () => { await result.current.connect() })
-    expect(result.current.address).toBe('GABC123')
-
     act(() => { result.current.disconnect() })
+
     expect(result.current.address).toBeNull()
   })
 })

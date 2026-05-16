@@ -38,7 +38,7 @@ jobs:
         with:
           node-version: 20
           cache: npm
-      - run: npm install
+      - run: npm install --ignore-scripts
       - run: npm run build
 
   app:
@@ -53,7 +53,8 @@ jobs:
         with:
           node-version: 20
           cache: npm
-      - run: npm install
+      - run: npm install --ignore-scripts
+      - run: npm test
       - run: npm run build
         env:
           NEXT_PUBLIC_API_URL: http://localhost:3001

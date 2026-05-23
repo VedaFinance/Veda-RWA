@@ -29,7 +29,7 @@
     "@vitest/coverage-v8": "^4.1.6",
     "autoprefixer": "^10.4.19",
     "jsdom": "^29.1.1",
-    "postcss": "^8.4.38",
+    "postcss": "^8.5.15",
     "tailwindcss": "^4.3.0",
     "typescript": "^6.0.3",
     "vitest": "^4.1.6"
